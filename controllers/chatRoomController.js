@@ -6,7 +6,7 @@ const createChatRoom = async (req, res) => {
         if (!name) res.json('name is require to create chat room');
         const checkRoom = await Chatroom.findOne({ name });
         if (checkRoom) return res.json('Chatroom is already exists');
-        const room = await Chatroom.create({ name });
+        const room = (await Chatroom.create({ name })).populate('User');
         res.json(room._doc);
 
     } catch (error) {

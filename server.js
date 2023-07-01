@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
     })
   socket.on('message',async (data) => {
         const newMessage = { ...data, user: socket.userId }
-        await Message.create(newMessage);
+        await Message.create(newMessage).populate('User');
         const allMessages = await Message.find({ chatroom: data.chatroom });
        io.emit('allMessages', allMessages);
 
