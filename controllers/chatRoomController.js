@@ -6,7 +6,7 @@ const createChatRoom = async (req, res) => {
         if (!name) res.json('name is require to create chat room');
         const checkRoom = await Chatroom.findOne({ name });
         if (checkRoom) return res.json('Chatroom is already exists');
-        const room = (await Chatroom.create({ name })).populate('User');
+        const room = (await Chatroom.create({ name }));
         res.json(room._doc);
 
     } catch (error) {
@@ -16,7 +16,7 @@ const createChatRoom = async (req, res) => {
 
 const getAllChatRooms = async (req, res) => {
     try {
-        const chatRooms = await Chatroom.find()
+        const chatRooms = await Chatroom.find().populate('User').exec()
         res.status(200).json(chatRooms);
     } catch (error) {
         console.log(error);
