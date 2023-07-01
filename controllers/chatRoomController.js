@@ -16,7 +16,7 @@ const createChatRoom = async (req, res) => {
 
 const getAllChatRooms = async (req, res) => {
     try {
-        const chatRooms = await Chatroom.find().populate('User').exec()
+        const chatRooms = await Chatroom.find()
         res.status(200).json(chatRooms);
     } catch (error) {
         console.log(error);

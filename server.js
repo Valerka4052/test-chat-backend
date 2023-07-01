@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
           
         socket.join({ chatRoomId });
         console.log(`user join to ${chatRoomId}`);
-         const allMessages = await Message.find({ chatroom: chatRoomId }).populate('User').exec();
+         const allMessages = await Message.find({ chatroom: chatRoomId });
         socket.emit('allMessages', allMessages);
     });
     socket.on('leaveChatRoom', ({ chatRoomId }) => {
@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
   socket.on('message',async (data) => {
         const newMessage = { ...data, user: socket.userId }
         await Message.create(newMessage);
-        const allMessages = await Message.find({ chatroom: data.chatroom }).populate('User').exec();
+        const allMessages = await Message.find({ chatroom: data.chatroom });
        io.emit('allMessages', allMessages);
 
   })
