@@ -22,9 +22,9 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
-        if (!user) res.json('There is no user with such email');
+        if (!user) return res.json('There is no user with such email');
         const truePassword = await bcrypt.compare(password, user.password);
-        if (!truePassword) res.json('Password is wrong!');
+        if (!truePassword) return res.json('Password is wrong!');
         const payload = { id: user._id };
         const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
         res.json({ ...user._doc, token });
@@ -43,4 +43,4 @@ const login = async (req, res) => {
 // };
 
 
-module.exports = { register, login};
+module.exports = { register, login };
