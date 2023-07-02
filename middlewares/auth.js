@@ -1,10 +1,13 @@
 const jwt = require('jsonwebtoken')
-const User = require('../models/User')
+const User = require('../models/User');
+require('dotenv').config();
+const { SECRET_KEY } = process.env;
+
 const auth = async (req, res, next) => {
     try {
         if (!req.headers.authorization) res.status(401).json('Forbidden!');
         const token = req.headers.authorization.split(' ')[1];  
-        const payload = await jwt.verify(token, 'lhvklhb');
+        const payload = await jwt.verify(token, SECRET_KEY);
         if (!payload) res.json('Not authorized');
         // const user = await User.findById(payload.id);
         // if (!user) throw new Error('Not authorized');

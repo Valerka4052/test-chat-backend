@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const jwt =require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
+
+const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
     try {
@@ -23,7 +26,7 @@ const login = async (req, res) => {
         const truePassword = await bcrypt.compare(password, user.password);
         if (!truePassword) res.json('Password is wrong!');
         const payload = { id: user._id };
-        const token = jwt.sign(payload, 'lhvklhb', { expiresIn: "7d" });
+        const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
         res.json({ ...user._doc, token });
    } catch (error) {
         console.log(error.message)
@@ -31,13 +34,13 @@ const login = async (req, res) => {
    }
 }
 
-const logout = async (req, res) => {
-    try {
+// const logout = async (req, res) => {
+//     try {
     
-    } catch (error) {
+//     } catch (error) {
     
-    }
-};
+//     }
+// };
 
 
-module.exports = { register, login, logout };
+module.exports = { register, login};
