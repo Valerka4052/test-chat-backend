@@ -26,7 +26,7 @@ const getAllChatRooms = async (req, res) => {
 const getChatRoomById = async (req, res) => {
     try {
         const { id } = req.params;
-        const chatRoom = await Chatroom.findById(id)
+        const chatRoom = await Chatroom.findOne({ _id: id });
         if(!chatRoom) return res.status(404).json('not found')
         res.status(200).json(chatRoom);
     } catch (error) {
