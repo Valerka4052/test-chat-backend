@@ -3,13 +3,12 @@ const Chatroom = require('../models/ChatRoom');
 const createChatRoom = async (req, res) => {
     try {
         const { id } = req.payload;
-        const { name } = req.body;
+        const { name, description } = req.body;
         if (!name) return res.json('name is require to create chat room');
         const checkRoom = await Chatroom.findOne({ name });
         if (checkRoom) return res.json('Chatroom is already exists');
-        const room = (await Chatroom.create({ name, user: id }));
+        const room = (await Chatroom.create({ name, description, user: id }));
         res.json(room._doc);
-
     } catch (error) {
         console.log(error.message);
     }

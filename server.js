@@ -25,9 +25,9 @@ const io = require('socket.io')(server,{
 io.use(async (socket, next) => {
   try {
     const { token } = socket.handshake.query;
-    const payload = await jwt.verify(token, SECRET_KEY);
-    if (!payload) return res.json('Not authorized');
-    socket.userId = payload.id;
+    const { id } = await jwt.verify(token, SECRET_KEY);
+    if (!id) return res.json('Not authorized');
+    socket.userId = id;
     next();
   } catch (error) {
     console.log(error.message);
