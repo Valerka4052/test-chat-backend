@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
   });
   socket.on('message', async (chatRoomId, message) => {
     await Message.create({ message, chatroom: chatRoomId, user: socket.userId });
+    await ChatRoom.findByIdAndUpdate(chatRoomId, { $inc: { commentsCount: 1 } });
     const allMessages = await Message.find({ chatroom: chatRoomId }).populate('user');
     io.in(chatRoomId).emit('allMessages', allMessages);
   });
