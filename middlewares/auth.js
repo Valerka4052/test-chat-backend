@@ -5,10 +5,12 @@ const { SECRET_KEY } = process.env;
 
 const auth = async (req, res, next) => {
     try {
-        if (!req.headers.authorization) res.status(401).json('Forbidden!');
+        console.log('req.headers.authorization',req.headers.authorization);
+        if (!req.headers.authorization) return res.status(401).json('Forbidden!');
         const token = req.headers.authorization.split(' ')[1];  
         const payload = await jwt.verify(token, SECRET_KEY);
-        if (!payload) return res.status(401).json('Not authorized');
+        console.log('payload', payload);
+        if (!payload) return res.status(401).json('invalid token');
         // const user = await User.findById(payload.id);
         // if (!user) throw new Error('Not authorized');
         // req.user = user;

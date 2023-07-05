@@ -34,13 +34,22 @@ const login = async (req, res) => {
    }
 }
 
-// const logout = async (req, res) => {
-//     try {
-    
-//     } catch (error) {
-    
-//     }
-// };
+const currentUser = async (req, res) => {
+   try {
+        if (!req.headers.authorization) return res.status(401).json('Forbidden!');
+        const token = req.headers.authorization.split(' ')[1];  
+        const payload = await jwt.verify(token, SECRET_KEY);
+        // console.log('payload', payload);
+        if (!payload) return res.status(401).json('invalid token');
+        const user = await User.findById(payload.id);
+        if (!user) throw new Error('Not authorized');
+    // console.log('user',user);
+      return  res.json(user);
+
+    } catch (error) {
+       console.log(error.message); 
+    };
+};
 
 
-module.exports = { register, login };
+module.exports = { register, login, currentUser };

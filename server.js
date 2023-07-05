@@ -24,9 +24,12 @@ const io = require('socket.io')(server,{
 
 io.use(async (socket, next) => {
   try {
+    // console.log('socket.handshake.query',socket.handshake.query);
     const { token } = socket.handshake.query;
+    // console.log('token',token);
     const { id } = await jwt.verify(token, SECRET_KEY);
-    if (!id) return res.json('Not authorized');
+    if (!id) return res.status(401).json('Not authorized');
+    // console.log('id',id);
     socket.userId = id;
     next();
   } catch (error) {
@@ -36,7 +39,7 @@ io.use(async (socket, next) => {
 io.on("connection", (socket) => {
   socket.on('chatRoom', async ({ chatRoomId }) => {
     socket.join(chatRoomId);
-    console.log(`user join to ${chatRoomId}`);
+    console.log(`user ${socket.userId} join to ${chatRoomId}`);
   });
   socket.on('leaveChatRoom', ({ chatRoomId }) => {
     socket.leave(chatRoomId);

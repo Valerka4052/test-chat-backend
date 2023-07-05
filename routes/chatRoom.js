@@ -4,8 +4,8 @@ const { createChatRoom, getAllChatRooms, getChatRoomById } = require('../control
 const { auth } = require('../middlewares/auth');
 
 // chatRouter.post('/', auth, catchErrors(createChatRoom));
-chatRouter.post('/',auth, catchErrors(createChatRoom));
-chatRouter.get('/', auth, catchErrors(getAllChatRooms));
-chatRouter.get('/:id', auth, catchErrors(getChatRoomById));
+chatRouter.post('/', catchErrors(createChatRoom));
+chatRouter.get('/',  catchErrors(getAllChatRooms));
+chatRouter.get('/:id',  catchErrors(getChatRoomById));
 
 module.exports = chatRouter;

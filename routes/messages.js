@@ -3,7 +3,7 @@ const { catchErrors } = require('../hadlers/errorHandlers');
 const { getAllMessagesByChatroom, getAllMessagesByUser } = require('../controllers/messageConroller');
 const { auth } = require('../middlewares/auth');
 
-messageRouter.post('/chat', auth, catchErrors(getAllMessagesByChatroom));
-messageRouter.get('/user', auth, catchErrors(getAllMessagesByUser));
+messageRouter.post('/chat',  catchErrors(getAllMessagesByChatroom));
+messageRouter.get('/user', catchErrors(getAllMessagesByUser));
 
 module.exports = messageRouter;
