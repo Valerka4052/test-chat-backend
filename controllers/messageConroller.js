@@ -15,7 +15,7 @@ const getAllMessagesByUser = async (req, res) => {
     try {
         const { id } = req.payload;
         if (!id) return res.json('something went wrong');
-        const allMessages = await Message.find({ user: id }).populate('chatroom');
+        const allMessages = await Message.find({ user: id }).populate('user chatroom');
         return res.json(allMessages);
     } catch (error) {
         return res.json('something went wrong');
