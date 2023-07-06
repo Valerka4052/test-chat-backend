@@ -51,5 +51,17 @@ const currentUser = async (req, res) => {
     };
 };
 
+const updateUserImage = async (req, res) => {
+    try {
+        const { id, imageURL } = req.body;
+        const user = await User.findById(id);
+        if (!user) return res.status(401).json('There is no user with such email');
+        const updatedUser = await User.findByIdAndUpdate(id, { imageURL }, { new: true });
+        res.json(updatedUser);
+    } catch (error) {
+        console.log(error.message)
+    }
+};
 
-module.exports = { register, login, currentUser };
+
+module.exports = { register, login, currentUser, updateUserImage };
