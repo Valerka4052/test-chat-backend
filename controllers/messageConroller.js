@@ -13,7 +13,7 @@ const getAllMessagesByChatroom = async (req, res) => {
 };
 const getAllMessagesByUser = async (req, res) => {
     try {
-        const { id } = req.payload;
+        const { id } = req.body;
         if (!id) return res.json('something went wrong');
         const allMessages = await Message.find({ user: id }).populate('user chatroom');
         return res.json(allMessages);
