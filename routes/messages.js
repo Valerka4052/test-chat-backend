@@ -4,6 +4,6 @@ const { getAllMessagesByChatroom, getAllMessagesByUser } = require('../controlle
 const { auth } = require('../middlewares/auth');
 
 messageRouter.post('/chat',  catchErrors(getAllMessagesByChatroom));
-messageRouter.get('/user', catchErrors(getAllMessagesByUser));
+messageRouter.post('/user', catchErrors(getAllMessagesByUser));
 
 module.exports = messageRouter;
